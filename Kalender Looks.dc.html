@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/ehorses-design-system-cc59e3bf-5768-4fa5-8d48-1e299b580983/colors_and_type.css">
+<script src="_ds/ehorses-design-system-cc59e3bf-5768-4fa5-8d48-1e299b580983/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0;background:#e9eaec;font-family:Montserrat,Tahoma,sans-serif}
+  @keyframes ehTwinkle{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1.25)}}
+  @keyframes ehFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  ::-webkit-scrollbar{height:10px;width:10px}
+  ::-webkit-scrollbar-thumb{background:#c9cacd;border-radius:6px}
+</style>
+</helmet>
+<div style="min-height:100vh;padding:30px 26px 50px;background:#e9eaec">
+  <div style="max-width:1240px;margin:0 auto 22px">
+    <div style="font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#c42026;margin-bottom:6px">ehorses · Adventskalender</div>
+    <h1 style="font-size:30px;font-weight:800;color:#242424;margin:0 0 6px">3 Kalender-Looks</h1>
+    <p style="font-size:14px;color:#666;margin:0;max-width:640px">Heller &amp; festlicher, viel Pferd, sichtbarer Schnee. <strong style="color:#242424">Tipp: Türchen antippen</strong> — beide Türflügel schwingen auf und geben den Blick auf das Geschenk frei.</p>
+  </div>
+
+  <div style="display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start;justify-content:center">
+    <sc-for list="{{ looks }}" as="look" hint-placeholder-count="3">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div>
+          <div style="font-size:15px;font-weight:800;color:#242424">{{ look.label }}</div>
+          <div style="font-size:12.5px;color:#777;max-width:384px;margin-top:2px">{{ look.subtitle }}</div>
+        </div>
+
+        <div style="{{ look.cardStyle }}">
+          <!-- ===== DECO: Look A (Festtags-Rot) ===== -->
+          <sc-if value="{{ look.isA }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;color:#fff;pointer-events:none;z-index:14">
+              <!-- Hufeisen-Wasserzeichen über die ganze Fläche -->
+              <div style="position:absolute;inset:0;opacity:.11;background-image:url(&quot;data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='46'%20height='50'%20viewBox='0%200%2046%2050'%3E%3Cpath%20d='M14%2046%20C7%2033%207%2018%2016%2011%20C20%208%2026%208%2030%2011%20C39%2018%2039%2033%2032%2046'%20fill='none'%20stroke='white'%20stroke-width='2'/%3E%3C/svg%3E&quot;);background-size:46px 50px"></div>
+              <!-- gestreute Line-Art-Motive -->
+              <svg viewBox="0 0 40 60" width="56" style="position:absolute;top:14px;left:4px;transform:rotate(-16deg);opacity:.72" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="20" y1="4" x2="20" y2="56"/><line x1="20" y1="13" x2="8" y2="21"/><line x1="20" y1="13" x2="32" y2="21"/><line x1="20" y1="26" x2="6" y2="36"/><line x1="20" y1="26" x2="34" y2="36"/><line x1="20" y1="39" x2="9" y2="48"/><line x1="20" y1="39" x2="31" y2="48"/></svg>
+              <svg viewBox="0 0 50 50" width="62" style="position:absolute;top:6px;right:2px;opacity:.72" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><g><path d="M25 25 C22 14 24 6 25 3 C26 6 28 14 25 25Z"/><path d="M25 25 C22 14 24 6 25 3 C26 6 28 14 25 25Z" transform="rotate(60 25 25)"/><path d="M25 25 C22 14 24 6 25 3 C26 6 28 14 25 25Z" transform="rotate(120 25 25)"/><path d="M25 25 C22 14 24 6 25 3 C26 6 28 14 25 25Z" transform="rotate(180 25 25)"/><path d="M25 25 C22 14 24 6 25 3 C26 6 28 14 25 25Z" transform="rotate(240 25 25)"/><path d="M25 25 C22 14 24 6 25 3 C26 6 28 14 25 25Z" transform="rotate(300 25 25)"/></g><circle cx="25" cy="25" r="2.4" fill="currentColor" stroke="none"/></svg>
+              <svg viewBox="0 0 40 46" width="40" style="position:absolute;top:96px;right:80px;transform:rotate(8deg);opacity:.66" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 44 C18 30 10 24 6 14"/><path d="M20 44 C22 30 30 24 34 14"/><circle cx="6" cy="11" r="3" fill="currentColor" stroke="none"/><circle cx="13" cy="7" r="3" fill="currentColor" stroke="none"/><circle cx="34" cy="11" r="3" fill="currentColor" stroke="none"/><circle cx="27" cy="7" r="3" fill="currentColor" stroke="none"/></svg>
+              <svg viewBox="0 0 34 46" width="46" style="position:absolute;top:250px;left:-8px;transform:rotate(-10deg);opacity:.66" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M17 3 C26 3 30 12 30 23 C30 35 24 44 17 44 C10 44 4 35 4 23 C4 12 8 3 17 3Z"/><path d="M6 21 L17 13 L28 21 M6 31 L17 23 L28 31 M9 12 L17 7 L25 12 M17 3 L17 44"/></svg>
+              <svg viewBox="0 0 44 56" width="44" style="position:absolute;top:300px;right:-6px;transform:rotate(6deg);opacity:.66" fill="none" stroke="currentColor" stroke-width="2.6"><line x1="22" y1="3" x2="22" y2="11"/><path d="M22 11 C8 11 6 31 11 43 L33 43 C38 31 36 11 22 11Z"/><line x1="9" y1="45" x2="35" y2="45" stroke-width="4" stroke-linecap="round"/></svg>
+              <svg viewBox="0 0 40 40" width="30" style="position:absolute;top:200px;right:30px;opacity:.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="20" y1="3" x2="20" y2="37"/><line x1="6" y1="11" x2="34" y2="29"/><line x1="34" y1="11" x2="6" y2="29"/><line x1="20" y1="10" x2="15" y2="6"/><line x1="20" y1="10" x2="25" y2="6"/><line x1="20" y1="30" x2="15" y2="34"/><line x1="20" y1="30" x2="25" y2="34"/></svg>
+              <svg viewBox="0 0 40 60" width="48" style="position:absolute;top:430px;left:2px;transform:rotate(20deg);opacity:.64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="20" y1="4" x2="20" y2="56"/><line x1="20" y1="13" x2="8" y2="21"/><line x1="20" y1="13" x2="32" y2="21"/><line x1="20" y1="26" x2="6" y2="36"/><line x1="20" y1="26" x2="34" y2="36"/><line x1="20" y1="39" x2="9" y2="48"/><line x1="20" y1="39" x2="31" y2="48"/></svg>
+              <svg viewBox="0 0 40 44" width="38" style="position:absolute;top:470px;right:4px;transform:rotate(-12deg);opacity:.64" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 42 C18 30 10 24 6 14"/><path d="M20 42 C22 30 30 24 34 14"/><circle cx="6" cy="11" r="3" fill="currentColor" stroke="none"/><circle cx="13" cy="7" r="3" fill="currentColor" stroke="none"/><circle cx="34" cy="11" r="3" fill="currentColor" stroke="none"/><circle cx="27" cy="7" r="3" fill="currentColor" stroke="none"/></svg>
+              <svg viewBox="0 0 48 52" width="46" style="position:absolute;bottom:24px;left:10px;transform:rotate(-12deg);opacity:.7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M14 50 C7 36 8 19 18 12 C23 8 25 8 30 12 C40 19 41 36 34 50"/><circle cx="14" cy="42" r="1.4" fill="currentColor" stroke="none"/><circle cx="15" cy="32" r="1.4" fill="currentColor" stroke="none"/><circle cx="34" cy="42" r="1.4" fill="currentColor" stroke="none"/><circle cx="33" cy="32" r="1.4" fill="currentColor" stroke="none"/></svg>
+              <svg viewBox="0 0 40 56" width="50" style="position:absolute;bottom:18px;right:14px;transform:rotate(8deg);opacity:.7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M15 5 L26 5 L26 33 C26 36 28 38 32 39 L35 41 C37 42 37 45 37 47 L37 50 L8 50 L8 15 C8 9 10 5 15 5 Z"/></svg>
+              <svg viewBox="0 0 40 40" width="26" style="position:absolute;top:560px;left:46px;opacity:.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="20" y1="3" x2="20" y2="37"/><line x1="6" y1="11" x2="34" y2="29"/><line x1="34" y1="11" x2="6" y2="29"/></svg>
+            </div>
+          </sc-if>
+          <!-- ===== DECO: Look B (Winternacht) ===== -->
+          <sc-if value="{{ look.isB }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;pointer-events:none;z-index:1">
+              <div style="position:absolute;top:56px;right:40px;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 38% 36%,#fffdf3,#ffe9b0);box-shadow:0 0 34px 10px rgba(255,233,176,.45)"></div>
+              <div style="position:absolute;top:48px;left:40px;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.8"></div>
+              <div style="position:absolute;top:90px;left:90px;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.7"></div>
+              <div style="position:absolute;top:70px;left:170px;width:2.5px;height:2.5px;border-radius:50%;background:#fff;opacity:.7"></div>
+              <div style="position:absolute;top:120px;right:120px;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.6"></div>
+              <div style="position:absolute;top:40px;right:150px;width:2.5px;height:2.5px;border-radius:50%;background:#fff;opacity:.75"></div>
+              <div style="position:absolute;left:0;right:0;bottom:0;height:150px;background:linear-gradient(180deg,#d5e6ec 0%,#fbfeff 100%);border-radius:48% 52% 0 0/60px 50px 0 0"></div>
+              <div style="position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(180deg,rgba(255,255,255,0),#fff)"></div>
+              <img src="assets/verkaufspferd.svg" style="position:absolute;left:52%;transform:translateX(-50%) scaleX(-1);bottom:30px;width:118px;filter:brightness(.16);opacity:.9"/>
+              <svg viewBox="0 0 40 60" width="42" style="position:absolute;bottom:54px;left:24px" fill="none" stroke="#3f6b4e" stroke-width="2.4" stroke-linecap="round"><line x1="20" y1="6" x2="20" y2="56"/><line x1="20" y1="16" x2="9" y2="24"/><line x1="20" y1="16" x2="31" y2="24"/><line x1="20" y1="30" x2="7" y2="40"/><line x1="20" y1="30" x2="33" y2="40"/></svg>
+            </div>
+          </sc-if>
+          <!-- ===== DECO: Look C (Frische Weihnacht) ===== -->
+          <sc-if value="{{ look.isC }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ look.decoWrap }}">
+              <img src="assets/verkaufspferd.svg" style="position:absolute;right:-40px;top:160px;width:240px;filter:brightness(0);opacity:.05"/>
+              <svg viewBox="0 0 40 60" width="50" style="position:absolute;top:132px;left:10px;transform:rotate(-18deg)" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="20" y1="4" x2="20" y2="56"/><line x1="20" y1="13" x2="8" y2="21"/><line x1="20" y1="13" x2="32" y2="21"/><line x1="20" y1="26" x2="6" y2="36"/><line x1="20" y1="26" x2="34" y2="36"/><line x1="20" y1="39" x2="9" y2="48"/><line x1="20" y1="39" x2="31" y2="48"/></svg>
+              <svg viewBox="0 0 40 44" width="40" style="position:absolute;top:136px;right:14px;color:#cf2730" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 42 C18 30 10 24 6 14"/><path d="M20 42 C22 30 30 24 34 14"/><circle cx="6" cy="11" r="3.2" fill="currentColor" stroke="none"/><circle cx="13" cy="7" r="3.2" fill="currentColor" stroke="none"/><circle cx="34" cy="11" r="3.2" fill="currentColor" stroke="none"/><circle cx="27" cy="7" r="3.2" fill="currentColor" stroke="none"/></svg>
+              <svg viewBox="0 0 48 52" width="46" style="position:absolute;bottom:46px;left:16px;transform:rotate(-12deg);color:#cf9b3f" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M13 50 C6 36 7 19 17 12 C22 8 26 8 31 12 C41 19 42 36 35 50"/><circle cx="13" cy="42" r="1.3" fill="currentColor" stroke="none"/><circle cx="35" cy="42" r="1.3" fill="currentColor" stroke="none"/></svg>
+              <svg viewBox="0 0 40 60" width="38" style="position:absolute;bottom:40px;right:18px;transform:rotate(14deg)" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="20" y1="4" x2="20" y2="56"/><line x1="20" y1="16" x2="9" y2="24"/><line x1="20" y1="16" x2="31" y2="24"/><line x1="20" y1="30" x2="7" y2="40"/><line x1="20" y1="30" x2="33" y2="40"/></svg>
+            </div>
+          </sc-if>
+
+          <canvas ref="{{ look.snowRef }}" style="position:absolute;inset:0;width:100%;height:100%;z-index:20;pointer-events:none"></canvas>
+
+          <!-- content -->
+          <div style="{{ look.contentStyle }}">
+            <div style="text-align:center;padding:16px 16px 8px">
+              <sc-if value="{{ look.whiteLogo }}" hint-placeholder-val="{{ false }}"><img src="assets/ehorses_logo_weiss.png" alt="ehorses" style="height:19px;margin-bottom:4px;opacity:.96"/></sc-if>
+              <sc-if value="{{ look.redLogo }}" hint-placeholder-val="{{ false }}"><img src="assets/ehorses_logo.png" alt="ehorses" style="height:19px;margin-bottom:4px;opacity:.96"/></sc-if>
+              <div style="{{ look.scriptStyle }}">Adventskalender</div>
+              <div style="{{ look.taglineStyle }}">… und jede Menge Pferdeglück</div>
+            </div>
+            <div style="{{ look.frameStyle }}">
+              <div style="{{ gridStyle }}">
+                <sc-for list="{{ look.tiles }}" as="t" hint-placeholder-count="24">
+                  <div style="{{ t.cell }}" onClick="{{ t.onClick }}">
+                    <div style="{{ t.interior }}">
+                      <span style="{{ t.sparkle1 }}">✦</span>
+                      <span style="{{ t.sparkle3 }}">✦</span>
+                      <span style="{{ t.giftWrap }}">
+                        <svg viewBox="0 0 48 52" width="{{ t.giftSize }}" height="{{ t.giftSize }}" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M14 50 C7 36 8 19 18 12 C23 8 25 8 30 12 C40 19 41 36 34 50"/><circle cx="14" cy="42" r="1.6" fill="currentColor" stroke="none"/><circle cx="15" cy="32" r="1.6" fill="currentColor" stroke="none"/><circle cx="34" cy="42" r="1.6" fill="currentColor" stroke="none"/><circle cx="33" cy="32" r="1.6" fill="currentColor" stroke="none"/></svg>
+                      </span>
+                      <span style="{{ t.sparkle2 }}">✦</span>
+                    </div>
+                    <div style="{{ t.leftHalf }}"><div style="{{ t.panelLeft }}"><span style="{{ t.numStyle }}">{{ t.day }}</span></div></div>
+                    <div style="{{ t.rightHalf }}"><div style="{{ t.panelRight }}"><span style="{{ t.numStyle }}">{{ t.day }}</span></div></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1240,&quot;height&quot;:960}}">
+class Component extends DCLogic {
+  layout = [
+    {day:24,w:2,h:2},{day:7,w:1,h:1},{day:13,w:1,h:1},{day:2,w:1,h:2},
+    {day:19,w:1,h:1},{day:5,w:1,h:1},{day:11,w:2,h:1},{day:16,w:1,h:1},
+    {day:1,w:1,h:1},{day:22,w:2,h:2},{day:9,w:1,h:1},{day:14,w:1,h:2},
+    {day:4,w:1,h:1},{day:20,w:1,h:1},{day:8,w:2,h:1},{day:17,w:1,h:1},
+    {day:3,w:1,h:1},{day:12,w:2,h:2},{day:23,w:1,h:1},{day:6,w:1,h:1},
+    {day:15,w:1,h:2},{day:10,w:1,h:1},{day:18,w:2,h:1},{day:21,w:1,h:1}
+  ];
+
+  themes = [
+    { id:"rot", isA:true, label:"Look 1 · Festtags-Rot & Gold",
+      subtitle:"Hell & edel im Poster-Stil — Gold-Rahmen, weiße Line-Art von Reit-Equipment & Tannengrün.",
+      bg:"radial-gradient(125% 95% at 50% -8%,#f43a44 0%,#df222a 46%,#b3151c 100%)",
+      logo:"assets/ehorses_logo_weiss.png", scriptColor:"#ffffff", taglineColor:"#f6d97a",
+      decoColor:"#ffffff", decoOpacity:.85, framed:true,
+      frame:{ margin:"2px 14px 16px", padding:"13px 11px 15px", borderRadius:"16px",
+        border:"2px solid rgba(245,214,122,.9)", boxShadow:"inset 0 0 0 4px rgba(255,255,255,.07), inset 0 0 0 5px rgba(245,214,122,.45)" },
+      doorBg:"linear-gradient(155deg,#f23a42,#c01a21)", doorBorder:"1.5px solid rgba(245,214,122,.7)",
+      seam:"1px solid rgba(110,8,12,.55)", numColor:"#f6d97a", numShadow:"0 1px 2px rgba(90,0,5,.45)",
+      interiorBg:"radial-gradient(circle at 50% 42%,#fff6df 0%,#f4cf6a 58%,#e0a93b 100%)",
+      interiorIcon:"#c01a21", sparkle:"#ffffff", padBottom:"14px",
+      motifColor:"#ffffff", motifOpacity:.22,
+      snow:{count:95,maxR:3.4,color:"rgba(255,255,255,.96)"} },
+
+    { id:"nacht", isB:true, label:"Look 2 · Winterstall bei Nacht",
+      subtitle:"Verschneite Szene — leuchtende Stallfenster, Pferd im Schnee, Mond & dichtes Schneetreiben.",
+      bg:"linear-gradient(180deg,#0c2036 0%,#173b54 42%,#2d6072 66%,#bcd6dd 82%,#eef5f8 100%)",
+      logo:"assets/ehorses_logo_weiss.png", scriptColor:"#ffffff", taglineColor:"#cfe6ef",
+      decoColor:"#dcebf2", decoOpacity:.85, framed:false,
+      frame:{ margin:"2px 12px 4px", padding:"2px 8px 0" },
+      doorBg:"linear-gradient(160deg,#3a6275,#1c3a47)", doorBorder:"1.5px solid rgba(247,210,122,.42)",
+      seam:"1px solid rgba(0,0,0,.4)", numColor:"#f3e4bd", numShadow:"0 1px 3px rgba(0,0,0,.55)",
+      interiorBg:"radial-gradient(circle at 50% 42%,#fff2cc 0%,#ffb648 54%,#e8902a 100%)",
+      interiorIcon:"#7a3b12", sparkle:"#fff7df", padBottom:"168px",
+      motifColor:"#ffffff", motifOpacity:.16,
+      snow:{count:130,maxR:4,color:"rgba(255,255,255,.97)"} },
+
+    { id:"frisch", isC:true, label:"Look 3 · Frische Weihnacht",
+      subtitle:"Creme, Tannengrün, Rot & Gold — modern, fröhlich, mit abwechselnden Türchen-Farben.",
+      bg:"linear-gradient(180deg,#fdf6ea 0%,#f5e8d2 100%)",
+      logo:"assets/ehorses_logo.png", scriptColor:"#cf2730", taglineColor:"#1f6b4a",
+      decoColor:"#1f6b4a", decoOpacity:.55, framed:true,
+      frame:{ margin:"2px 14px 16px", padding:"13px 11px 15px", borderRadius:"16px",
+        border:"2px solid #1f6b4a", boxShadow:"inset 0 0 0 4px #fff, inset 0 0 0 5px rgba(207,155,63,.6)" },
+      palette:[
+        {bg:"linear-gradient(155deg,#f23a42,#cf2730)", num:"#fff4d6", border:"1.5px solid rgba(255,255,255,.55)", motifC:"#ffffff", motifO:.26},
+        {bg:"linear-gradient(155deg,#ffffff,#f3ebdd)", num:"#cf2730", border:"1.5px solid rgba(31,107,74,.3)", motifC:"#1f6b4a", motifO:.2},
+        {bg:"linear-gradient(155deg,#268057,#185c3e)", num:"#f6d97a", border:"1.5px solid rgba(255,255,255,.45)", motifC:"#ffffff", motifO:.26}
+      ],
+      motifColor:"#1f6b4a", motifOpacity:.2,
+      doorBg:"#fff", doorBorder:"1.5px solid rgba(0,0,0,.08)", seam:"1px solid rgba(0,0,0,.12)",
+      numColor:"#cf2730", numShadow:"none",
+      interiorBg:"radial-gradient(circle at 50% 42%,#fff6df 0%,#f4cf6a 66%,#cf9b3f 100%)",
+      interiorIcon:"#cf2730", sparkle:"#cf9b3f", padBottom:"14px",
+      snow:{count:80,maxR:2.9,color:"rgba(120,160,205,.78)"} }
+  ];
+
+  state = { open:{} };
+
+  constructor(p){
+    super(p);
+    this.snowRefs = { rot:React.createRef(), nacht:React.createRef(), frisch:React.createRef() };
+    this._rafs = [];
+  }
+
+  componentDidMount(){
+    setTimeout(()=>{
+      this.themes.forEach(t=>this.startSnowFor(this.snowRefs[t.id].current, t.snow));
+    }, 100);
+  }
+  componentWillUnmount(){ this._rafs.forEach(r=>cancelAnimationFrame(r)); }
+
+  startSnowFor(c, cfg){
+    if(!c) return;
+    const ctx = c.getContext("2d");
+    let W=0,H=0,flakes=[];
+    const init=()=>{
+      W = c.width = c.offsetWidth; H = c.height = c.offsetHeight;
+      flakes = Array.from({length:cfg.count}, ()=>({
+        x:Math.random()*W, y:Math.random()*H, r:Math.random()*cfg.maxR+0.7,
+        d:Math.random()*1.0+0.45, s:Math.random()*Math.PI*2 }));
+    };
+    init();
+    const loop=()=>{
+      if(!c.isConnected) return;
+      if(c.offsetWidth!==W || c.offsetHeight!==H) init();
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle = cfg.color;
+      ctx.shadowColor = "rgba(255,255,255,.5)"; ctx.shadowBlur = 2;
+      for(const f of flakes){
+        f.y += f.d; f.s += 0.013; f.x += Math.sin(f.s)*0.5;
+        if(f.y > H+5){ f.y = -5; f.x = Math.random()*W; }
+        ctx.beginPath(); ctx.arc(f.x,f.y,f.r,0,6.3); ctx.fill();
+      }
+      const id = requestAnimationFrame(loop); this._rafs.push(id);
+    };
+    loop();
+  }
+
+  toggle(id, day){
+    const k = id+"-"+day;
+    this.setState(s=>({ open:{...s.open, [k]:!s.open[k]} }));
+  }
+
+  motifKeys = ["horseshoe","stirrup","pine","berry","snowflake","boot","bit","star"];
+
+  motifEl(key, size){
+    const R = React.createElement;
+    const mk = (vb, kids, o={}) => R("svg",{viewBox:vb,width:size,height:size,fill:o.fill||"none",
+      stroke:o.nostroke?"none":"currentColor",strokeWidth:o.sw||2.6,strokeLinecap:"round",strokeLinejoin:"round"},kids);
+    const ln=(i,a,b,c,d,w)=>R("line",{key:i,x1:a,y1:b,x2:c,y2:d,strokeWidth:w});
+    const pa=(i,d)=>R("path",{key:i,d});
+    const ci=(i,cx,cy,r)=>R("circle",{key:i,cx,cy,r,fill:"currentColor",stroke:"none"});
+    const rg=(i,cx,cy,r)=>R("circle",{key:i,cx,cy,r});
+    switch(key){
+      case "horseshoe": return mk("0 0 48 52",[pa(0,"M14 50 C7 36 8 19 18 12 C23 8 25 8 30 12 C40 19 41 36 34 50"),ci(1,14,42,1.5),ci(2,15,33,1.5),ci(3,17,24,1.5),ci(4,34,42,1.5),ci(5,33,33,1.5),ci(6,31,24,1.5)],{sw:3});
+      case "stirrup": return mk("0 0 44 56",[ln(0,22,3,22,11),pa(1,"M22 11 C8 11 6 31 11 43 L33 43 C38 31 36 11 22 11Z"),ln(2,9,45,35,45,4)],{sw:3});
+      case "pine": return mk("0 0 40 60",[ln(0,20,4,20,56),ln(1,20,13,8,21),ln(2,20,13,32,21),ln(3,20,26,6,36),ln(4,20,26,34,36),ln(5,20,39,9,48),ln(6,20,39,31,48)],{sw:2.4});
+      case "berry": return mk("0 0 40 46",[pa(0,"M20 44 C18 30 10 24 6 14"),pa(1,"M20 44 C22 30 30 24 34 14"),ci(2,6,11,3),ci(3,13,7,3),ci(4,34,11,3),ci(5,27,7,3)],{sw:2.2});
+      case "snowflake": return mk("0 0 40 40",[ln(0,20,3,20,37),ln(1,6,11,34,29),ln(2,34,11,6,29),ln(3,20,10,15,6),ln(4,20,10,25,6),ln(5,20,30,15,34),ln(6,20,30,25,34),ln(7,10,16,6,12),ln(8,30,16,34,12),ln(9,10,24,6,28),ln(10,30,24,34,28)],{sw:2.2});
+      case "boot": return mk("0 0 40 56",[pa(0,"M15 5 L26 5 L26 33 C26 36 28 38 32 39 L35 41 C37 42 37 45 37 47 L37 50 L8 50 L8 15 C8 9 10 5 15 5 Z")],{sw:2.6});
+      case "bit": return mk("0 0 56 32",[rg(0,12,16,8),rg(1,44,16,8),ln(2,20,16,26,16),ln(3,30,16,36,16),ci(4,28,16,2.4)],{sw:2.6});
+      default: return mk("0 0 40 40",[pa(0,"M20 3 C22 15 25 18 37 20 C25 22 22 25 20 37 C18 25 15 22 3 20 C15 18 18 15 20 3 Z")],{fill:"currentColor",nostroke:true});
+    }
+  }
+
+  buildTiles(look){
+    const S = this.state;
+    return this.layout.map((L, idx)=>{
+      const day = L.day;
+      const open = !!S.open[look.id+"-"+day];
+      const big = (L.w>1 || L.h>1);
+      let bg = look.doorBg, num = look.numColor, bd = look.doorBorder;
+      let motifColor = look.motifColor, motifOpacity = look.motifOpacity;
+      if(look.palette){ const p = look.palette[idx % look.palette.length]; bg=p.bg; num=p.num; bd=p.border; motifColor=p.motifC; motifOpacity=p.motifO; }
+      const innerEdge = open ? bd : "0px solid transparent";
+      const cell = { gridColumn:"span "+L.w, gridRow:"span "+L.h, position:"relative",
+        perspective:"950px", cursor:"pointer", zIndex: open?6:1 };
+      const interior = { position:"absolute", inset:0, borderRadius:"14px", background:look.interiorBg,
+        display:"flex", alignItems:"center", justifyContent:"center",
+        boxShadow:"inset 0 0 16px rgba(120,60,0,.25)", overflow:"hidden" };
+      const halfBase = { position:"absolute", top:0, height:"100%", width:"50%", overflow:"hidden",
+        backfaceVisibility:"hidden", transition:"transform .6s cubic-bezier(.5,.05,.2,1), filter .4s", zIndex:3 };
+      const leftHalf = { ...halfBase, left:0, transformOrigin:"left center", borderRadius:"14px 0 0 14px",
+        borderTop:bd, borderLeft:bd, borderBottom:bd, borderRight:innerEdge,
+        transform: open?"rotateY(-142deg)":"rotateY(0deg)", filter: open?"brightness(.78)":"none",
+        boxShadow: open?"10px 0 20px rgba(0,0,0,.28)":"none" };
+      const rightHalf = { ...halfBase, left:"50%", transformOrigin:"right center", borderRadius:"0 14px 14px 0",
+        borderTop:bd, borderRight:bd, borderBottom:bd, borderLeft:innerEdge,
+        transform: open?"rotateY(142deg)":"rotateY(0deg)", filter: open?"brightness(.78)":"none",
+        boxShadow: open?"-10px 0 20px rgba(0,0,0,.28)":"none" };
+      const panelBase = { position:"absolute", top:0, height:"100%", width:"200%", background:bg,
+        display:"flex", alignItems:"center", justifyContent:"center" };
+      const panelLeft = { ...panelBase, left:0 };
+      const panelRight = { ...panelBase, left:"-100%" };
+      const numStyle = { position:"relative", zIndex:1, fontFamily:"Montserrat,sans-serif", fontWeight:800, lineHeight:1,
+        fontSize: big?"40px":"22px", color:num, textShadow:look.numShadow };
+      const motif = this.motifEl(this.motifKeys[(day-1) % this.motifKeys.length], big?70:46);
+      const motifStyle = { position:"absolute", left:"50%", top:"50%", transform:"translate(-50%,-50%)",
+        color:motifColor, opacity: open?0:motifOpacity, lineHeight:0, zIndex:0, pointerEvents:"none",
+        transition:"opacity .25s" };
+      const giftWrap = { position:"relative", zIndex:1, color:look.interiorIcon, display:"flex",
+        alignItems:"center", justifyContent:"center", animation:"ehFloat 2.4s ease-in-out infinite",
+        transform: open?"scale(1)":"scale(.5)", transition:"transform .55s .12s cubic-bezier(.3,1.5,.5,1)" };
+      const giftSize = big?46:26;
+      const spk = (pos)=>({ position:"absolute", color:look.sparkle, fontSize: big?"15px":"10px",
+        animation:"ehTwinkle 1.7s ease-in-out infinite", ...pos });
+      const sparkle1 = spk({ top:"15%", left:"17%", animationDelay:"0s" });
+      const sparkle2 = spk({ bottom:"16%", right:"18%", animationDelay:".5s" });
+      const sparkle3 = spk({ top:"20%", right:"22%", animationDelay:"1s" });
+      return { day, big, open, cell, interior, leftHalf, rightHalf, panelLeft, panelRight,
+        numStyle, motif, motifStyle, giftWrap, giftSize, sparkle1, sparkle2, sparkle3, onClick:()=>this.toggle(look.id, day) };
+    });
+  }
+
+  renderVals(){
+    const gridStyle = { display:"grid", gridTemplateColumns:"repeat(4,1fr)", gridAutoRows:"72px",
+      gridAutoFlow:"row dense", gap:"9px" };
+    const looks = this.themes.map(t=>({
+      id:t.id, label:t.label, subtitle:t.subtitle, isA:!!t.isA, isB:!!t.isB, isC:!!t.isC,
+      whiteLogo: t.logo.indexOf("weiss")!==-1, redLogo: t.logo.indexOf("weiss")===-1, snowRef:this.snowRefs[t.id],
+      cardStyle:{ position:"relative", width:"384px", borderRadius:"22px", overflow:"hidden",
+        background:t.bg, boxShadow:"0 18px 44px rgba(0,0,0,.18)" },
+      decoWrap:{ position:"absolute", inset:0, color:t.decoColor, opacity:t.decoOpacity, pointerEvents:"none", zIndex:1 },
+      contentStyle:{ position:"relative", zIndex:5, paddingBottom:t.padBottom },
+      scriptStyle:{ fontFamily:"'Great Vibes', cursive", fontSize:"46px", lineHeight:".9", color:t.scriptColor,
+        margin:"2px 0 5px", textShadow: t.isC?"none":"0 2px 12px rgba(0,0,0,.28)" },
+      taglineStyle:{ fontFamily:"Montserrat,sans-serif", fontSize:"10px", fontWeight:700, letterSpacing:".16em",
+        textTransform:"uppercase", color:t.taglineColor },
+      frameStyle:t.frame,
+      tiles:this.buildTiles(t)
+    }));
+    return { looks, gridStyle };
+  }
+}
+</script>
+</body>
+</html>

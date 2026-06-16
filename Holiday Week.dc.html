@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/ehorses-design-system-cc59e3bf-5768-4fa5-8d48-1e299b580983/colors_and_type.css">
+<script src="_ds/ehorses-design-system-cc59e3bf-5768-4fa5-8d48-1e299b580983/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&amp;display=swap" rel="stylesheet">
+<script src="image-slot.js"></script>
+<style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0;background:#0a2118;font-family:Montserrat,Tahoma,sans-serif}
+  @keyframes ehShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+  @keyframes ehPop{0%{transform:scale(.72)}55%{transform:scale(1.1)}100%{transform:scale(1)}}
+  @keyframes ehRise{0%{transform:translateY(14px)}100%{transform:translateY(0)}}
+  @keyframes ehTwinkle{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1.2)}}
+  @keyframes ehFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  @keyframes ehBob{0%,100%{transform:scale(1)}50%{transform:scale(1.075)}}
+  @keyframes ehGlowPulse{0%,100%{box-shadow:0 0 0 0 rgba(243,210,122,0)}50%{box-shadow:0 0 22px 2px rgba(243,210,122,.55)}}
+  ::-webkit-scrollbar{width:0;height:0}
+</style>
+</helmet>
+<div style="min-height:100vh;width:100%;display:flex;justify-content:center;align-items:stretch;background:radial-gradient(120% 80% at 50% -10%,#123a2a,#08160f 70%)">
+  <div style="position:relative;width:100%;max-width:430px;min-height:100vh;overflow:hidden;display:flex;flex-direction:column">
+    <div style="{{ appBgStyle }}"></div>
+    <canvas ref="{{ snowRef }}" style="position:absolute;inset:0;width:100%;height:100%;z-index:20;pointer-events:none"></canvas>
+
+    <!-- ===================== LOGIN ===================== -->
+    <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ true }}">
+      <div style="position:relative;z-index:8;flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 26px;text-align:center">
+        <div>
+          <img src="assets/holiday_week_logo.png" alt="ehorses Holiday Week" style="height:158px;margin-bottom:12px;filter:drop-shadow(0 6px 16px rgba(0,0,0,.22))">
+          <h1 style="font-size:32px;line-height:1.12;font-weight:800;color:#fff;margin:0 0 12px;text-shadow:0 2px 10px rgba(0,60,70,.4)">Sonne, Strand<br>&amp; Gewinne.</h1>
+          <p style="color:#fff;font-size:15px;line-height:1.5;margin:0 0 30px;max-width:310px;margin-left:auto;margin-right:auto;text-shadow:0 1px 8px rgba(0,60,70,.35)">Öffne jeden Tag dein Türchen mit Sommer-Highlights, einer Frage und der Chance auf tolle Gewinne.</p>
+        </div>
+        <div style="background:#fff;border-radius:18px;padding:22px 20px;box-shadow:0 18px 50px rgba(0,0,0,.45);text-align:left">
+          <label style="display:block;font-size:13px;font-weight:700;color:#242424;margin-bottom:8px">Mit E-Mail anmelden</label>
+          <input value="{{ emailInput }}" onInput="{{ onEmail }}" type="email" placeholder="deine@email.de" style="width:100%;padding:14px 15px;border:2px solid #e3e3e3;border-radius:12px;font-size:16px;font-family:Montserrat,sans-serif;color:#242424;outline:none;margin-bottom:12px">
+          <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:11px">
+            <span onClick="{{ toggleNewsletter }}" style="{{ nlBox }}">{{ nlMark }}</span>
+            <span style="font-size:12.5px;color:#4d4d4d;line-height:1.4">Ja, schickt mir die tägliche Türchen-Erinnerung &amp; den ehorses-Newsletter (jederzeit abbestellbar).</span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:16px">
+            <span onClick="{{ toggleConsent }}" style="{{ csBox }}">{{ csMark }}</span>
+            <span style="font-size:12.5px;color:#4d4d4d;line-height:1.4">Ich akzeptiere die <a href="#" style="color:#15879b;font-weight:700;text-decoration:underline">Teilnahmebedingungen</a> &amp; <a href="#" style="color:#15879b;font-weight:700;text-decoration:underline">Datenschutz</a>.</span>
+          </div>
+          <button onClick="{{ sendLink }}" style="width:100%;padding:15px;border:none;border-radius:12px;background:#c42026;color:#fff;font-size:16px;font-weight:700;font-family:Montserrat,sans-serif;cursor:pointer;transition:all .2s" style-hover="background:#92000C">Anmelden &amp; mitmachen →</button>
+          <p style="font-size:12px;color:#7c7c7c;text-align:center;margin:14px 0 0;line-height:1.45">Kein Passwort nötig – du erhältst einen <strong>Magic-Link</strong> (oder 6-stelligen Code) per E-Mail. Ganz wie beim Tippspiel.</p>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ===================== LINK SENT ===================== -->
+    <sc-if value="{{ isLinkSent }}" hint-placeholder-val="{{ false }}">
+      <div style="position:relative;z-index:8;flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 26px;text-align:center;animation:ehRise .4s ease both">
+        <div style="width:84px;height:84px;border-radius:50%;background:rgba(16,185,129,.16);border:1px solid rgba(16,185,129,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 22px">
+          <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" opacity="0"></path><path d="M3 7l9 6 9-6"></path><rect x="3" y="5" width="18" height="14" rx="2"></rect></svg>
+        </div>
+        <h1 style="font-size:26px;font-weight:800;color:#fff;margin:0 0 10px">Fast geschafft!</h1>
+        <p style="color:rgba(255,255,255,.82);font-size:15px;line-height:1.5;margin:0 0 4px">Wir haben dir einen Anmelde-Link &amp; Code geschickt an</p>
+        <p style="color:#f3d27a;font-size:16px;font-weight:700;margin:0 0 20px">{{ email }}</p>
+        <div style="background:#fff;border-radius:16px;padding:18px 18px 20px;box-shadow:0 14px 40px rgba(0,0,0,.4);text-align:left;margin-bottom:16px">
+          <label style="display:block;font-size:13px;font-weight:700;color:#242424;margin-bottom:8px;text-align:center">6-stelligen Code eingeben</label>
+          <input value="{{ codeInput }}" onInput="{{ onCode }}" inputmode="numeric" placeholder="••••••" style="width:100%;padding:13px;border:2px solid #e3e3e3;border-radius:12px;font-size:24px;font-weight:800;font-family:Montserrat,sans-serif;color:#242424;outline:none;text-align:center;letter-spacing:.42em;margin-bottom:12px"/>
+          <button onClick="{{ verifyCode }}" style="width:100%;padding:14px;border:none;border-radius:12px;background:#c42026;color:#fff;font-size:16px;font-weight:700;font-family:Montserrat,sans-serif;cursor:pointer">Code bestätigen →</button>
+        </div>
+        <button onClick="{{ openMagic }}" style="width:100%;padding:14px;border:none;border-radius:12px;background:#10b981;color:#fff;font-size:15px;font-weight:700;font-family:Montserrat,sans-serif;cursor:pointer;margin-bottom:14px">oder Magic-Link öffnen (Demo) →</button>
+        <button onClick="{{ changeEmail }}" style="background:none;border:none;color:rgba(255,255,255,.7);font-size:14px;font-family:Montserrat,sans-serif;cursor:pointer;text-decoration:underline">andere E-Mail verwenden</button>
+      </div>
+    </sc-if>
+
+    <!-- ===================== CALENDAR ===================== -->
+    <sc-if value="{{ isCalendar }}" hint-placeholder-val="{{ false }}">
+      <div style="position:relative;z-index:8;flex:1;display:flex;flex-direction:column;min-height:0">
+        <!-- preview bar -->
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 14px;background:rgba(0,0,0,.22);backdrop-filter:blur(2px);z-index:9">
+          <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65)">Vorschau · Demo-Tag</span>
+          <div style="flex:1"></div>
+          <button onClick="{{ stepBack }}" style="width:24px;height:24px;border-radius:7px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:15px;cursor:pointer;line-height:1;padding:0">−</button>
+          <span style="font-size:11px;font-weight:700;color:#fff;min-width:64px;text-align:center">{{ currentDayLabel }}</span>
+          <button onClick="{{ stepFwd }}" style="width:24px;height:24px;border-radius:7px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:15px;cursor:pointer;line-height:1;padding:0">+</button>
+        </div>
+        <!-- header -->
+        <div style="position:relative;z-index:16;padding:12px 18px 6px;text-align:center">
+          <div style="position:relative;display:inline-block">
+            <div style="position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);width:236px;height:236px;border-radius:50%;background:radial-gradient(circle,rgba(255,237,150,.95),rgba(255,214,80,.5) 46%,rgba(255,210,74,0) 72%);z-index:0"></div>
+            <img src="assets/holiday_week_logo.png" alt="ehorses Holiday Week" style="position:relative;z-index:1;height:122px;display:block;margin:0 auto;filter:drop-shadow(0 4px 10px rgba(0,0,0,.2))">
+          </div>
+          <h1 style="position:relative;z-index:1;font-size:29px;font-weight:800;color:#fff;margin:2px 0 0;text-shadow:0 2px 10px rgba(0,70,80,.45)">8 Tage – 8 Gewinne!</h1>
+          <div style="display:flex;align-items:center;gap:10px;justify-content:center;margin-top:12px">
+            <div style="flex:1;max-width:170px;height:7px;border-radius:999px;background:rgba(0,0,0,.2);overflow:hidden">
+              <div style="{{ progressStyle }}"></div>
+            </div>
+            <span style="{{ progressLabelStyle }}">{{ openedLabel }}</span>
+          </div>
+        </div>
+        <!-- deko: Hufeisen-Muster + weiße Line-Art über die ganze Fläche -->
+        <!-- Strand-Szene -->
+        <div style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden">
+          <img src="assets/img_palm.png" style="position:absolute;right:-54px;bottom:-14px;width:150px;transform:scaleX(-1);opacity:.9" alt="">
+          <img src="assets/img_palm.png" style="position:absolute;left:-52px;bottom:-20px;width:122px;opacity:.85" alt="">
+          <svg viewBox="0 0 44 90" width="42" style="position:absolute;left:34px;bottom:0;opacity:.5"><path fill="none" stroke="#2f9e57" stroke-width="4" stroke-linecap="round" d="M16 90 Q8 64 16 46 Q24 28 14 8"></path><path fill="none" stroke="#3aa862" stroke-width="3.5" stroke-linecap="round" d="M26 90 Q36 66 28 46 Q22 30 32 12"></path></svg>
+          <svg viewBox="0 0 44 90" width="38" style="position:absolute;right:40px;bottom:0;opacity:.45;transform:scaleX(-1)"><path fill="none" stroke="#2f9e57" stroke-width="4" stroke-linecap="round" d="M16 90 Q8 64 16 46 Q24 28 14 8"></path><path fill="none" stroke="#3aa862" stroke-width="3.5" stroke-linecap="round" d="M26 90 Q36 66 28 46 Q22 30 32 12"></path></svg>
+          <svg viewBox="0 0 400 30" width="100%" preserveAspectRatio="none" style="position:absolute;left:0;right:0;top:60%;height:24px;opacity:.4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M0 16 Q25 6 50 16 T100 16 T150 16 T200 16 T250 16 T300 16 T350 16 T400 16"></path></svg>
+          <sc-for list="{{ sceneFish }}" as="f" hint-placeholder-count="20"><svg viewBox="0 0 40 24" style="{{ f.style }}" fill="currentColor"><path d="M2 12 C8 5 22 5 29 12 C22 19 8 19 2 12Z"></path><path d="M28 12 L39 6 L36 12 L39 18Z"></path></svg></sc-for>
+          <sc-for list="{{ sceneHorses }}" as="h" hint-placeholder-count="7"><img src="assets/img_seahorse.png" style="{{ h.style }}" alt=""></sc-for>
+          <sc-for list="{{ sceneShells }}" as="s" hint-placeholder-count="8"><svg viewBox="0 0 44 40" style="{{ s.style }}" fill="currentColor"><path d="M22 3 C10 3 3 18 5 31 L39 31 C41 18 34 3 22 3Z"></path><path d="M22 5 L22 31 M14 7 L11 31 M30 7 L33 31 M8 15 L6 31 M36 15 L38 31" stroke="rgba(120,80,30,.3)" stroke-width="1.4" fill="none"></path></svg></sc-for>
+          <sc-for list="{{ sceneStars }}" as="st" hint-placeholder-count="3"><svg viewBox="0 0 44 44" style="{{ st.style }}" fill="currentColor"><path d="M22 2 L27 16 L42 16 L30 25 L34 40 L22 31 L10 40 L14 25 L2 16 L17 16Z"></path></svg></sc-for>
+          <div style="position:absolute;left:40%;top:52%;width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.5)"></div>
+          <div style="position:absolute;right:38%;top:55%;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45)"></div>
+          <div style="position:absolute;left:55%;top:42%;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.4)"></div>
+        </div>
+        <!-- Kokosnuss-Feld -->
+        <div style="position:relative;z-index:8;flex:1;overflow-y:auto;padding:10px 16px 30px">
+          <div style="{{ gridStyle }}">
+            <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="8">
+              <div style="{{ t.cell }}" onClick="{{ t.onClick }}">
+                <sc-if value="{{ t.showNum }}" hint-placeholder-val="{{ true }}"><img src="assets/img_coconut_straw.png" style="{{ t.imgStyle }}" alt=""></sc-if>
+                <sc-if value="{{ t.done }}" hint-placeholder-val="{{ false }}"><img src="assets/img_coconut_split.png" style="{{ t.imgStyle }}" alt=""></sc-if>
+                <sc-if value="{{ t.showNum }}" hint-placeholder-val="{{ true }}"><span style="{{ t.numStyle }}">{{ t.day }}</span></sc-if>
+                <sc-if value="{{ t.done }}" hint-placeholder-val="{{ false }}"><span style="{{ t.dayPill }}">Tag {{ t.day }}</span><span style="{{ t.doneBadge }}">✓</span></sc-if>
+                <sc-if value="{{ t.locked }}" hint-placeholder-val="{{ false }}"><span style="{{ t.lockStyle }}"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor"><path d="M6 10V8a6 6 0 1112 0v2h1a1 1 0 011 1v9a1 1 0 01-1 1H5a1 1 0 01-1-1v-9a1 1 0 011-1h1zm2 0h8V8a4 4 0 10-8 0v2z"></path></svg></span></sc-if>
+                <sc-if value="{{ t.special }}" hint-placeholder-val="{{ false }}"><span style="{{ t.ribbonStyle }}">★</span></sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <button onClick="{{ logout }}" style="position:absolute;top:42px;right:14px;z-index:10;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.85);font-size:11px;font-weight:600;font-family:Montserrat,sans-serif;padding:5px 10px;border-radius:999px;cursor:pointer">Abmelden</button>
+      </div>
+    </sc-if>
+
+    <!-- ===================== DOOR DETAIL ===================== -->
+    <sc-if value="{{ isDoor }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;z-index:30;background:#fff;display:flex;flex-direction:column;animation:ehRise .35s ease both">
+        <div style="{{ door.heroBgStyle }}">
+          <div style="position:absolute;inset:0;z-index:1;overflow:hidden">
+            <div style="position:absolute;right:-46px;top:-46px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(255,228,140,.5),rgba(255,210,74,0) 70%)"></div>
+            <div style="position:absolute;right:-14px;top:-8px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle at 50% 55%,#fff8d2,#ffd246 60%,#ffc01f);box-shadow:0 0 30px 6px rgba(255,206,70,.45)"></div>
+            <img src="assets/img_palm.png" style="position:absolute;left:-44px;bottom:-22px;width:118px;opacity:.85" alt="">
+            <img src="assets/img_palm.png" style="position:absolute;right:-48px;bottom:-26px;width:104px;transform:scaleX(-1);opacity:.8" alt="">
+            <svg viewBox="0 0 400 30" width="100%" preserveAspectRatio="none" style="position:absolute;left:0;right:0;top:64%;height:20px;opacity:.4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M0 16 Q25 6 50 16 T100 16 T150 16 T200 16 T250 16 T300 16 T350 16 T400 16"></path></svg>
+            <img src="assets/img_seahorse.png" style="position:absolute;left:2%;top:26%;width:42px;opacity:.8" alt="">
+            <img src="assets/img_seahorse.png" style="position:absolute;right:2%;top:40%;width:46px;transform:scaleX(-1);opacity:.7" alt="">
+            <svg viewBox="0 0 40 24" width="34" style="position:absolute;left:21%;top:20%;opacity:.55"><path fill="#f3b6a3" d="M2 12 C8 5 22 5 29 12 C22 19 8 19 2 12Z"></path><path fill="#f3b6a3" d="M28 12 L39 6 L36 12 L39 18Z"></path></svg>
+            <svg viewBox="0 0 40 24" width="26" style="position:absolute;right:27%;top:28%;opacity:.5;transform:scaleX(-1)"><path fill="#a9dbe2" d="M2 12 C8 5 22 5 29 12 C22 19 8 19 2 12Z"></path><path fill="#a9dbe2" d="M28 12 L39 6 L36 12 L39 18Z"></path></svg>
+            <svg viewBox="0 0 44 44" width="30" style="position:absolute;left:34%;bottom:8px;opacity:.75;transform:rotate(-10deg)"><path fill="#f0a07f" d="M22 2 L27 16 L42 16 L30 25 L34 40 L22 31 L10 40 L14 25 L2 16 L17 16Z"></path></svg>
+            <svg viewBox="0 0 44 40" width="26" style="position:absolute;right:37%;bottom:8px;opacity:.7"><path fill="#f4e7cf" d="M22 3 C10 3 3 18 5 31 L39 31 C41 18 34 3 22 3Z"></path><path stroke="rgba(120,80,30,.3)" stroke-width="1.4" fill="none" d="M22 5 L22 31 M14 7 L11 31 M30 7 L33 31"></path></svg>
+            <div style="position:absolute;left:42%;top:40%;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45)"></div>
+            <div style="position:absolute;right:31%;top:46%;width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.4)"></div>
+          </div>
+          <button onClick="{{ backToCalendar }}" style="position:absolute;top:14px;left:14px;z-index:4;display:flex;align-items:center;gap:4px;background:rgba(0,0,0,.32);border:none;color:#fff;font-size:14px;font-weight:600;font-family:Montserrat,sans-serif;padding:8px 14px 8px 10px;border-radius:999px;cursor:pointer;backdrop-filter:blur(4px)">‹ Übersicht</button>
+          <img src="assets/holiday_week_logo.png" alt="ehorses Holiday Week" style="position:absolute;top:8px;right:8px;z-index:5;height:82px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.22))">
+          <div style="position:absolute;right:14px;bottom:14px;z-index:5;width:90px;height:90px;border-radius:50%;background:#e8513f;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:800;line-height:1.18;box-shadow:0 8px 20px rgba(0,0,0,.3);padding:10px">Jetzt mitmachen &amp; gewinnen!</div>
+          <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-56%) rotate(-3deg);width:160px;height:160px;background:#fff;border-radius:16px;box-shadow:0 14px 32px rgba(0,0,0,.32);padding:11px;z-index:2">
+            <image-slot id="{{ door.prodSlotId }}" fit="contain" placeholder="Produktbild" style="width:100%;height:100%;border-radius:9px"></image-slot>
+          </div>
+          <div style="position:absolute;left:16px;bottom:14px;z-index:3;width:74px;height:74px;background:#fff;border-radius:50%;box-shadow:0 8px 20px rgba(0,0,0,.3);padding:9px;display:flex;align-items:center;justify-content:center">
+            <image-slot id="{{ door.logoSlotId }}" shape="circle" fit="contain" placeholder="Logo" style="width:100%;height:100%"></image-slot>
+          </div>
+        </div>
+
+        <div style="flex:1;overflow-y:auto;padding:18px 20px 30px">
+          <!-- product + quiz -->
+          <sc-if value="{{ notConfirmed }}" hint-placeholder-val="{{ true }}">
+            <span style="display:inline-block;background:#fdecea;color:#c42026;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:5px 11px;border-radius:999px;margin-bottom:8px">{{ door.brand }}</span>
+            <h2 style="font-size:23px;font-weight:800;color:#242424;margin:0 0 14px;line-height:1.18">{{ door.name }}</h2>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+              <span style="background:linear-gradient(90deg,#c42026,#ff4c4d);color:#fff;font-size:15px;font-weight:800;padding:8px 15px;border-radius:999px">Wert: {{ door.value }}</span>
+              <a href="{{ door.link }}" target="_blank" style="font-size:14px;font-weight:700;color:#c42026">Zum Produkt ›</a>
+            </div>
+            <p style="color:#4d4d4d;font-size:14.5px;line-height:1.55;margin:0 0 22px">{{ door.desc }}</p>
+
+            <div style="background:#f8f8f8;border:1px solid #eee;border-radius:18px;padding:20px 18px">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                <span style="width:7px;height:7px;border-radius:50%;background:#c42026"></span>
+                <span style="font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#c42026">Gewinnspiel-Frage</span>
+              </div>
+              <h3 style="font-size:18px;font-weight:700;color:#242424;margin:0 0 16px;line-height:1.3">{{ door.q }}</h3>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <sc-for list="{{ door.answerVMs }}" as="a" hint-placeholder-count="3">
+                  <div style="{{ a.style }}" onClick="{{ a.onClick }}">
+                    <span style="{{ a.letterStyle }}">{{ a.letter }}</span>
+                    <span>{{ a.label }}</span>
+                  </div>
+                </sc-for>
+              </div>
+
+              <sc-if value="{{ door.hasSize }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:20px;padding-top:18px;border-top:1px dashed #ddd">
+                  <div style="font-size:13px;font-weight:700;color:#242424;margin-bottom:10px">{{ door.sizeLabel }}</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <sc-for list="{{ door.sizeVMs }}" as="s" hint-placeholder-count="4">
+                      <div style="{{ s.style }}" onClick="{{ s.onClick }}">{{ s.label }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <button onClick="{{ participate }}" style="{{ participateStyle }}">Jetzt teilnehmen</button>
+              <p style="font-size:12px;color:#7c7c7c;text-align:center;margin:12px 0 0">Die Auflösung gibt es nach der Holiday Week.</p>
+            </div>
+          </sc-if>
+
+          <!-- confirmation -->
+          <sc-if value="{{ confirmed }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center;padding:8px 4px">
+              <div style="width:92px;height:92px;border-radius:50%;background:#e0f0e9;display:flex;align-items:center;justify-content:center;margin:6px auto 18px;animation:ehPop .5s ease both">
+                <span style="font-size:46px;color:#10b981;font-weight:800;line-height:1">✓</span>
+              </div>
+              <h2 style="font-size:24px;font-weight:800;color:#242424;margin:0 0 8px">Du bist dabei!</h2>
+              <p style="color:#4d4d4d;font-size:15px;line-height:1.5;margin:0 0 22px">Deine Teilnahme an der Verlosung ist bestätigt. Viel Glück – du hast die Chance auf:</p>
+              <div style="background:#f8f8f8;border:1px solid #eee;border-radius:16px;padding:16px;text-align:left;display:flex;align-items:center;gap:14px;margin-bottom:14px">
+                <div style="{{ door.miniHeroStyle }}"><svg viewBox="0 0 52 52" width="30" height="30" fill="currentColor" stroke="none"><path d="M26 3 L31.7 18.3 L48 19 L35.2 29.4 L39.5 45.2 L26 36.3 L12.5 45.2 L16.8 29.4 L4 19 L20.3 18.3 Z"></path></svg></div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:11px;font-weight:700;color:#c42026;text-transform:uppercase;letter-spacing:.04em">{{ door.brand }}</div>
+                  <div style="font-size:15px;font-weight:700;color:#242424;line-height:1.25">{{ door.name }}</div>
+                  <div style="font-size:13px;color:#7c7c7c;margin-top:2px">Wert: {{ door.value }}</div>
+                </div>
+              </div>
+              <div style="background:#fff;border:1px solid #eee;border-radius:14px;padding:13px 16px;text-align:left;font-size:13.5px;color:#4d4d4d;margin-bottom:8px">
+                <div style="margin-bottom:4px">Deine Antwort: <strong style="color:#242424">{{ door.chosenAnswer }}</strong></div>
+                <sc-if value="{{ door.hasSize }}" hint-placeholder-val="{{ false }}"><div>Gewählte {{ door.sizeLabel }}: <strong style="color:#242424">{{ door.chosenSize }}</strong></div></sc-if>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:9px;background:#fdecea;border-radius:12px;padding:12px 14px;text-align:left;margin:14px 0 22px">
+                <span style="color:#c42026;font-size:18px;line-height:1.2">★</span>
+                <span style="font-size:13px;color:#4d4d4d;line-height:1.45">Du wanderst zusätzlich in den Lostopf für den <strong style="color:#c42026">großen Hauptgewinn zum Abschluss</strong></span>
+              </div>
+              <button onClick="{{ backToCalendar }}" style="width:100%;padding:15px;border:none;border-radius:12px;background:#c42026;color:#fff;font-size:16px;font-weight:700;font-family:Montserrat,sans-serif;cursor:pointer">Zurück zum Kalender</button>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ===================== TOAST ===================== -->
+    <sc-if value="{{ toastVisible }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;left:50%;bottom:32px;transform:translateX(-50%);z-index:60;background:#242424;color:#fff;font-size:13px;font-weight:600;padding:12px 18px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.4);max-width:300px;text-align:center;animation:ehRise .25s ease both">{{ toastText }}</div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:430,&quot;height&quot;:880},&quot;currentDay&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;min&quot;:1,&quot;max&quot;:8,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;snow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  // ============================================================
+  //  INHALTE PFLEGEN — hier jedes Türchen bearbeiten.
+  //  Felder pro Tag: brand, name, value, desc, link, q, answers[3],
+  //  correct (Index der richtigen Antwort, 0–2), size (oder null).
+  //  size: { label: "...", options: ["...", ...] }  →  Zusatz-Abfrage
+  // ============================================================
+  doors = [
+    {brand:"Casco",name:"Reithelm „Champ\"",value:"169 €",link:"#",desc:"Leichter Turnierhelm mit verstellbarem Belüftungssystem und herausnehmbarem Innenfutter.",q:"Wie oft sollte ein Reithelm nach einem Sturz spätestens getauscht werden?",answers:["Sofort","Nach 1 Jahr","Gar nicht"],correct:0,size:{label:"Welcher Kopfumfang?",options:["52–55 cm","56–58 cm","59–61 cm"]}},
+    {brand:"Sprenger",name:"Ledertrense „Elegance\"",value:"129 €",link:"#",desc:"Anatomisch geformtes Reithalfter aus weichem Leder – druckentlastend und stilvoll.",q:"Welches Metall gilt als besonders speichelflussfördernd beim Gebiss?",answers:["Edelstahl","Sensogan","Aluminium"],correct:1,size:null},
+    {brand:"Eskadron",name:"Dressur-Schabracke",value:"79 €",link:"#",desc:"Klassische Schabracke mit Lammfell-Optik am Widerrist und ehorses-Stickerei.",q:"Wofür sorgt eine gute Schabracke in erster Linie?",answers:["Optik","Druckverteilung","Gewicht"],correct:1,size:{label:"Welche Größe?",options:["Pony","Warmblut","Full"]}},
+    {brand:"Kentucky",name:"Gamaschen-Set",value:"99 €",link:"#",desc:"Vier Gamaschen mit stoßdämpfender Polsterung für sicheren Halt beim Springen.",q:"Welche Beine werden mit Streichkappen typischerweise zuerst geschützt?",answers:["Hinterbeine","Vorderbeine","Alle vier"],correct:1,size:{label:"Welche Größe?",options:["S","M","L"]}},
+    {brand:"Bucas",name:"Outdoor-Decke 200g",value:"149 €",link:"#",desc:"Wasserdichte Winterdecke mit Stay-Dry-Innenfutter für trockene Wärme bei jedem Wetter.",q:"Was bedeutet die Grammzahl bei Pferdedecken?",answers:["Gewicht","Füllung/Wärme","Größe"],correct:1,size:{label:"Welche Deckengröße?",options:["125","135","145","155","165"]}},
+    {brand:"Kerbl",name:"Putzbox gefüllt",value:"59 €",link:"#",desc:"Robuste Putzbox inklusive Striegel, Kardätsche, Wurzelbürste und Hufkratzer.",q:"In welche Richtung putzt man ein Pferd mit der Kardätsche?",answers:["Gegen den Strich","Mit dem Fell","Kreisförmig"],correct:1,size:null},
+    {brand:"Pikeur",name:"Reithose „Grip\"",value:"139 €",link:"#",desc:"Atmungsaktive Vollbesatz-Reithose mit Silikon-Grip für besten Sitz im Sattel.",q:"Was beschreibt „Vollbesatz\" bei einer Reithose?",answers:["Besatz am ganzen Bein","Nur am Knie","Am Bund"],correct:0,size:{label:"Welche Konfektionsgröße?",options:["34","36","38","40","42"]}},
+    {brand:"Mühldorfer",name:"Leckerli-Vorrat",value:"49 €",link:"#",desc:"Ein Quartal voller gesunder Belohnungen – getreidefrei und mit Kräutern.",q:"Welches dieser Lebensmittel ist für Pferde giftig?",answers:["Apfel","Avocado","Karotte"],correct:1,size:null},
+    {brand:"Cavallo",name:"Stiefeletten Leder",value:"199 €",link:"#",desc:"Hochwertige Lederstiefeletten mit YKK-Reißverschluss – auch ohne Chaps tragbar.",q:"Wie nennt man die kurzen Lederstulpen über Stiefeletten?",answers:["Chaps","Sporen","Steigbügel"],correct:0,size:{label:"Welche Schuhgröße?",options:["38","39","40","41","42"]}},
+    {brand:"Busse",name:"Halfter + Strick",value:"39 €",link:"#",desc:"Stabiles Stallhalfter mit gepolstertem Nasenriemen und passendem Führstrick.",q:"Wo sollte ein Halfter idealerweise anliegen?",answers:["Locker baumelnd","Zwei Finger Platz","Stramm"],correct:1,size:null},
+    {brand:"Effax",name:"Lederpflege-Set",value:"29 €",link:"#",desc:"Lederbalsam, Seife und Schwamm für geschmeidiges, langlebiges Reitleder.",q:"Wie oft sollte Reitleder grob gepflegt werden?",answers:["Täglich","Regelmäßig","Nie"],correct:1,size:null},
+    {brand:"ehorses",name:"Sattel-Gutschein",value:"500 €",link:"#",desc:"Großer Gutschein für deinen Wunschsattel beim Fachhändler deiner Wahl.",q:"Was prüft ein Sattler beim Anpassen zuerst?",answers:["Farbe","Wirbelsäulenfreiheit","Preis"],correct:1,size:null},
+    {brand:"Eskadron",name:"Abschwitzdecke",value:"69 €",link:"#",desc:"Atmungsaktive Fleecedecke, die nach dem Training Feuchtigkeit nach außen transportiert.",q:"Wann kommt die Abschwitzdecke zum Einsatz?",answers:["Beim Reiten","Nach dem Schwitzen","Beim Putzen"],correct:1,size:{label:"Welche Deckengröße?",options:["125","135","145","155"]}},
+    {brand:"Roeckl",name:"Reithandschuhe",value:"45 €",link:"#",desc:"Griffige Sommerhandschuhe mit Mesh-Einsätzen und Touch-Funktion.",q:"Welcher Vorteil sprechen für Reithandschuhe?",answers:["Besserer Grip","Mehr Gewicht","Wärmedämmung"],correct:0,size:{label:"Welche Handschuhgröße?",options:["6,5","7","7,5","8","8,5"]}},
+    {brand:"Kentucky",name:"Stallhalfter Fleece",value:"35 €",link:"#",desc:"Weich gefüttertes Halfter, das auch empfindliche Pferdeköpfe schont.",q:"Welches Material schont die Haut am besten?",answers:["Nylon hart","Fleece-Polster","Metall"],correct:1,size:null},
+    {brand:"Bucas",name:"Fliegenmaske",value:"25 €",link:"#",desc:"UV-Schutz und Insektenabwehr mit klarem Sichtfeld für entspannte Sommertage.",q:"Wovor schützt eine Fliegenmaske zusätzlich?",answers:["Vor Kälte","Vor UV-Strahlung","Vor Regen"],correct:1,size:null},
+    {brand:"Eskadron",name:"Bandagen-Set",value:"49 €",link:"#",desc:"Vier elastische Fleecebandagen inklusive Unterlagen in Trendfarben.",q:"Was gehört unter eine Bandage?",answers:["Nichts","Eine Unterlage","Watte allein"],correct:1,size:null},
+    {brand:"Mountain Horse",name:"Winter-Reitstiefel",value:"229 €",link:"#",desc:"Wasserdichte, gefütterte Reitstiefel mit Thermosohle für kalte Tage im Stall.",q:"Was zeichnet einen guten Winter-Reitstiefel aus?",answers:["Dünne Sohle","Wärmeisolierung","Offene Ferse"],correct:1,size:{label:"Welche Schuhgröße?",options:["37","38","39","40","41","42"]}},
+    {brand:"Leovet",name:"Mähnen-Pflegeset",value:"22 €",link:"#",desc:"Glanzspray, Mähnenbürste und Detangler für eine seidige Mähne.",q:"Womit lässt sich verfilzte Mähne am schonendsten lösen?",answers:["Schere","Detangler-Spray","Wasser"],correct:1,size:null},
+    {brand:"Cavallo",name:"Sattelunterlage",value:"59 €",link:"#",desc:"Ergonomische Pad mit Memory-Schaum für gleichmäßige Druckverteilung.",q:"Welche Aufgabe hat ein gutes Sattelpad?",answers:["Dekoration","Druck verteilen","Sattel erhöhen"],correct:1,size:null},
+    {brand:"Pikeur",name:"Softshell-Reitjacke",value:"159 €",link:"#",desc:"Wind- und wasserabweisende Jacke mit Bewegungsfreiheit für den Sattel.",q:"Was bedeutet „Softshell\"?",answers:["Hartschale","Flexibles Funktionsgewebe","Daunen"],correct:1,size:{label:"Welche Größe?",options:["XS","S","M","L","XL"]}},
+    {brand:"ehorses Academy",name:"Reitkurs-Gutschein",value:"300 €",link:"#",desc:"Wochenend-Kurs mit lizenziertem Trainer – Dressur oder Springen nach Wahl.",q:"Welche Grundgangart ist die langsamste?",answers:["Trab","Schritt","Galopp"],correct:1,size:null},
+    {brand:"Hauptner",name:"Hufpflege-Set",value:"19 €",link:"#",desc:"Edelstahl-Hufkratzer mit Bürste plus Huföl für gesunde Hufe.",q:"Wie oft sollten Hufe idealerweise ausgekratzt werden?",answers:["Wöchentlich","Täglich","Monatlich"],correct:1,size:null},
+    {brand:"ehorses",name:"Ausrüstungs-Paket",value:"1.000 €",link:"#",desc:"Der große Hauptgewinn: Ein Komplettpaket für dich und dein Pferd – frei zusammengestellt.",q:"Seit wann gibt es ehorses als Pferdemarktplatz?",answers:["Seit 1999","Seit 2009","Seit 2019"],correct:0,size:null}
+  ];
+
+  // 8 Türchen für die Holiday Week
+  layout = [
+    {day:1},{day:2},{day:3},{day:4},{day:5},{day:6},{day:7},{day:8}
+  ];
+
+  themes = {
+    rot:{
+      wall:"linear-gradient(165deg,#8d161b 0%,#c42026 48%,#7c0f14 100%)",
+      door:"linear-gradient(150deg,#b21d23,#7c0f14)",
+      doorLocked:"linear-gradient(150deg,#7e1418,#5c0d10)",
+      doorDone:"linear-gradient(150deg,#12a673,#0a855c)",
+      border:"rgba(243,210,122,.5)", borderDone:"rgba(255,255,255,.5)",
+      num:"#f3d27a", numLocked:"rgba(243,210,122,.4)", numDone:"#fff",
+      behind:"radial-gradient(circle at 40% 40%,#ffe7a8,#f3b13c)",
+      shadow:"inset 0 1px 0 rgba(255,255,255,.14), 0 3px 10px rgba(0,0,0,.28)",
+      title:"#fff", titleAccent:"#f3d27a", progress:"linear-gradient(90deg,#f3d27a,#ffe7a8)", progressText:"rgba(255,255,255,.85)"
+    },
+    holz:{
+      wall:"repeating-linear-gradient(86deg,#4a3120 0px,#5a3a22 2px,#6b4a2b 3px,#6b4a2b 70px,#553722 72px)",
+      door:"linear-gradient(180deg,#8a5e36,#5d3c20)",
+      doorLocked:"linear-gradient(180deg,#5d3f26,#3f2914)",
+      doorDone:"linear-gradient(180deg,#12a673,#0a855c)",
+      border:"rgba(0,0,0,.35)", borderDone:"rgba(255,255,255,.4)",
+      num:"#f4e4c1", numLocked:"rgba(244,228,193,.4)", numDone:"#fff",
+      behind:"radial-gradient(circle at 40% 40%,#ffe7a8,#caa46a)",
+      shadow:"inset 0 1px 0 rgba(255,255,255,.18), inset 0 -2px 4px rgba(0,0,0,.3), 0 3px 10px rgba(0,0,0,.3)",
+      title:"#fff", titleAccent:"#f4e4c1", progress:"linear-gradient(90deg,#caa46a,#f4e4c1)", progressText:"rgba(255,255,255,.85)"
+    },
+    modern:{
+      wall:"linear-gradient(170deg,#0e3b2e 0%,#0a2a20 100%)",
+      door:"#ffffff",
+      doorLocked:"#dfe7e3",
+      doorDone:"linear-gradient(150deg,#12a673,#0a855c)",
+      border:"rgba(0,0,0,.06)", borderDone:"rgba(255,255,255,.5)",
+      num:"#10b981", numLocked:"#9fb3aa", numDone:"#fff",
+      behind:"radial-gradient(circle at 40% 40%,#d4f1e2,#10b981)",
+      shadow:"0 4px 14px rgba(0,0,0,.22)",
+      title:"#fff", titleAccent:"#10b981", progress:"linear-gradient(90deg,#10b981,#5ee0b0)", progressText:"rgba(255,255,255,.8)"
+    }
+  };
+
+  red = {
+    wall:"linear-gradient(180deg,#8fd8ec 0%,#46bcd0 32%,#1f9cb4 52%,#7fcdb9 66%,#ecd9ad 81%,#f4e8ce 100%)",
+    doorBg:"linear-gradient(155deg,#2fc3d6,#15879b)",
+    doorLocked:"linear-gradient(155deg,#9bbabf,#728f94)",
+    border:"1.5px solid rgba(255,255,255,.8)",
+    num:"#ffffff", numLocked:"rgba(255,255,255,.55)", numShadow:"0 1px 2px rgba(0,70,80,.4)",
+    interiorBg:"radial-gradient(circle at 50% 40%,#fff6d8 0%,#ffd24a 52%,#f7a325 100%)",
+    interiorIcon:"#e8513f", sparkle:"#ffffff",
+    progress:"linear-gradient(90deg,#ffd24a,#ffe9a8)"
+  };
+
+  state = {
+    screen:"login", email:"", emailInput:"",
+    newsletter:true, consent:false, codeInput:"",
+    currentDay: this.props.currentDay ?? 5,
+    openingDay:null, activeDay:null,
+    selAnswer:null, selSize:null, confirmed:false,
+    participated:{}, toast:null
+  };
+
+  constructor(p){ super(p); this.snowRef = React.createRef(); }
+
+  componentDidMount(){
+    try{
+      const em = localStorage.getItem("holiday_email");
+      const p = JSON.parse(localStorage.getItem("holiday_participated")||"{}");
+      this.setState(em ? {email:em, participated:p, screen:"calendar"} : {participated:p});
+    }catch(e){}
+    /* kein Schnee in der Holiday Week */
+  }
+  componentWillUnmount(){
+    cancelAnimationFrame(this._raf);
+    window.removeEventListener("resize", this._onResize);
+    clearTimeout(this._toastT);
+  }
+
+  startSnow(){
+    if(!(this.props.snow ?? true)) return;
+    const c = this.snowRef.current; if(!c) return;
+    const ctx = c.getContext("2d");
+    let W=0,H=0,flakes=[];
+    const init=()=>{
+      W = c.width = c.offsetWidth; H = c.height = c.offsetHeight;
+      const n = Math.max(46, Math.round(W*H/6200));
+      flakes = Array.from({length:n}, ()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2.6+1,d:Math.random()*1.0+0.5,s:Math.random()*Math.PI*2}));
+    };
+    init();
+    this._onResize = ()=>init();
+    window.addEventListener("resize", this._onResize);
+    const loop=()=>{
+      if(!c.isConnected){ return; }
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle="rgba(255,255,255,.95)";
+      ctx.shadowColor="rgba(255,255,255,.5)"; ctx.shadowBlur=2;
+      for(const f of flakes){
+        f.y += f.d; f.s += 0.012; f.x += Math.sin(f.s)*0.45;
+        if(f.y > H+4){ f.y = -4; f.x = Math.random()*W; }
+        ctx.beginPath(); ctx.arc(f.x,f.y,f.r,0,6.3); ctx.fill();
+      }
+      this._raf = requestAnimationFrame(loop);
+    };
+    loop();
+  }
+
+  showToast(msg){
+    clearTimeout(this._toastT);
+    this.setState({toast:msg});
+    this._toastT = setTimeout(()=>this.setState({toast:null}), 2200);
+  }
+
+  onEmail = (e)=> this.setState({emailInput:e.target.value});
+  validEmail = (v)=> /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v);
+  toggleNewsletter = ()=> this.setState(s=>({newsletter:!s.newsletter}));
+  toggleConsent = ()=> this.setState(s=>({consent:!s.consent}));
+  onCode = (e)=> this.setState({codeInput:(e.target.value||"").replace(/\D/g,"").slice(0,6)});
+  sendLink = ()=>{
+    const v = (this.state.emailInput||"").trim();
+    if(!this.validEmail(v)){ this.showToast("Bitte gib eine gültige E-Mail-Adresse ein."); return; }
+    if(!this.state.consent){ this.showToast("Bitte bestätige die Teilnahmebedingungen & den Datenschutz."); return; }
+    this.setState({email:v, screen:"linksent", codeInput:""});
+  };
+  finishLogin = ()=>{
+    try{
+      localStorage.setItem("holiday_email", this.state.email);
+      localStorage.setItem("holiday_newsletter", this.state.newsletter?"1":"0");
+      localStorage.setItem("holiday_consent", "1");
+    }catch(e){}
+    this.setState({screen:"calendar"});
+  };
+  openMagic = ()=> this.finishLogin();
+  verifyCode = ()=>{
+    if((this.state.codeInput||"").length!==6){ this.showToast("Bitte gib den 6-stelligen Code aus der E-Mail ein."); return; }
+    this.finishLogin();
+  };
+  changeEmail = ()=> this.setState({screen:"login"});
+  logout = ()=>{ try{localStorage.removeItem("holiday_email");}catch(e){} this.setState({screen:"login", emailInput:"", email:""}); };
+
+  stepDay = (d)=> this.setState(s=>({currentDay: Math.min(8, Math.max(1, s.currentDay+d))}));
+
+  openDoor = (day)=>{
+    const S = this.state;
+    if(day > S.currentDay){ this.showToast("Dieses Türchen ist noch nicht freigeschaltet."); return; }
+    const rec = S.participated[day];
+    if(rec){
+      this.setState({ screen:"door", activeDay:day, selAnswer:rec.answer, selSize:rec.size, confirmed:true });
+      return;
+    }
+    this.setState({openingDay:day});
+    setTimeout(()=>this.setState({
+      screen:"door", activeDay:day, openingDay:null,
+      selAnswer:null, selSize:null, confirmed:false
+    }), 560);
+  };
+  backToCalendar = ()=> this.setState({screen:"calendar", activeDay:null});
+  chooseAnswer = (i)=>{ if(this.state.confirmed) return; this.setState({selAnswer:i}); };
+  chooseSize = (o)=>{ if(this.state.confirmed) return; this.setState({selSize:o}); };
+  participate = ()=>{
+    const S = this.state;
+    if(S.selAnswer==null){ this.showToast("Bitte wähle eine Antwort aus."); return; }
+    const d = this.doors[S.activeDay-1];
+    if(d.size && S.selSize==null){ this.showToast("Bitte wähle noch eine Größe aus."); return; }
+    const rec = {answer:S.selAnswer, size:S.selSize, at:Date.now()};
+    const participated = {...S.participated, [S.activeDay]:rec};
+    try{ localStorage.setItem("holiday_participated", JSON.stringify(participated)); }catch(e){}
+    this.setState({participated, confirmed:true});
+  };
+
+  monthName = (day)=> "Tag "+day;
+
+  // Hintergrund-Deko überschneidungsfrei verteilen (einmalig, gecached)
+  buildScene(){
+    const W=398, H=640;
+    let seed=13;
+    const rnd=()=>{ const x=Math.sin(seed++*91.73)*43758.5453; return x-Math.floor(x); };
+    const items=[];
+    // feste Hindernisse (Palmen + Seegras an den Ecken) reservieren Platz
+    items.push({x:4,y:606,r:78},{x:394,y:612,r:74},{x:55,y:626,r:30},{x:345,y:628,r:28});
+    const place=(w, yMin, yMax)=>{
+      const r=w*0.6;
+      let best={x:W/2,y:(yMin+yMax)/2}, bestScore=-1e9;
+      for(let t=0;t<500;t++){
+        const x=r+rnd()*(W-2*r);
+        const y=yMin+r+rnd()*(yMax-yMin-2*r);
+        let minD=1e9;
+        for(const it of items){ const dx=x-it.x, dy=y-it.y; const d=Math.sqrt(dx*dx+dy*dy)-(r+it.r); if(d<minD)minD=d; }
+        if(minD>bestScore){ bestScore=minD; best={x,y}; if(minD>3) break; }
+      }
+      items.push({x:best.x,y:best.y,r});
+      return best;
+    };
+    const mk=(p,w,tf,op,color)=>({ style:{ position:"absolute",
+      left:(p.x/W*100).toFixed(2)+"%", top:(p.y/H*100).toFixed(2)+"%",
+      width:w.toFixed(0)+"px", opacity:op.toFixed(2),
+      transform:"translate(-50%,-50%) "+tf, color } });
+    const fishC=["#f3b6a3","#a9dbe2","#f6cf8e","#f0a8b0","#9ed8c0"];
+    const shellC=["#f4e7cf","#fbeede","#f0e0c4"];
+    const horses=[], fish=[], shells=[], stars=[];
+    for(let i=0;i<7;i++){ const w=36+rnd()*20; const p=place(w,176,432);
+      horses.push(mk(p,w,(rnd()>.5?"scaleX(-1) ":"")+"rotate("+((rnd()-.5)*14).toFixed(0)+"deg)",0.64+rnd()*0.24,"")); }
+    for(let i=0;i<20;i++){ const w=18+rnd()*15; const p=place(w,176,448);
+      fish.push(mk(p,w,(rnd()>.5?"scaleX(-1) ":"")+"rotate("+((rnd()-.5)*22).toFixed(0)+"deg)",0.45+rnd()*0.3,fishC[Math.floor(rnd()*5)])); }
+    for(let i=0;i<8;i++){ const w=24+rnd()*13; const p=place(w,470,600);
+      shells.push(mk(p,w,"rotate("+((rnd()-.5)*40).toFixed(0)+"deg)",0.62+rnd()*0.26,shellC[i%3])); }
+    for(let i=0;i<3;i++){ const w=27+rnd()*9; const p=place(w,472,596);
+      stars.push(mk(p,w,"rotate("+((rnd()-.5)*36).toFixed(0)+"deg)",0.8,"#f0a07f")); }
+    return {horses, fish, shells, stars};
+  }
+
+  renderVals(){
+    const S = this.state;
+    const TH = this.red;
+    const onLogin = S.screen==="login", onSent = S.screen==="linksent";
+    const appBgStyle = { position:"absolute", inset:0, zIndex:0, background: TH.wall };
+    const chkBox = (on)=>({ width:"22px", height:"22px", flexShrink:0, borderRadius:"6px", cursor:"pointer",
+      border:"2px solid "+(on?"#15879b":"#cfcfcf"), background:on?"#15879b":"#fff", color:"#fff",
+      fontSize:"13px", fontWeight:800, lineHeight:1, display:"flex", alignItems:"center", justifyContent:"center" });
+
+    // Kokosnuss-Türchen mit echten Aquarell-Grafiken
+    const tiles = this.layout.map(L=>{
+      const day = L.day;
+      const done = !!S.participated[day];
+      const locked = day > S.currentDay;
+      const opening = S.openingDay === day;
+      const openable = !locked && !done;
+      const big = (day===8);
+      const w = big?142:116;
+      const tilt = ((day*37)%5-2)*1.6;
+      const cell = { position:"relative", width:w+"px", cursor: locked?"default":"pointer",
+        zIndex: opening?6:1,
+        transform:"rotate("+tilt+"deg) scale("+(opening?1.14:1)+")",
+        transition:"transform .4s cubic-bezier(.3,1.4,.5,1)" };
+      const imgStyle = { width:"100%", height:"auto", display:"block",
+        filter: locked? "grayscale(.7) brightness(1.06) opacity(.5)" : "drop-shadow(0 6px 10px rgba(0,40,55,.22))",
+        animation: openable? ("ehBob 2.1s ease-in-out "+((day%4)*0.35).toFixed(2)+"s infinite") : "none",
+        transformOrigin:"50% 60%" };
+      const numStyle = { position:"absolute", left:"50%", top:"63%", transform:"translate(-50%,-50%)",
+        fontFamily:"Montserrat,sans-serif", fontWeight:800, fontSize: big?"44px":"34px", color:"#fff",
+        textShadow:"0 2px 5px rgba(60,30,5,.65)", zIndex:3, pointerEvents:"none" };
+      const dayPill = { position:"absolute", left:"50%", top:"56%", transform:"translateX(-50%)",
+        background:"rgba(232,81,63,.95)", color:"#fff", fontSize:"12px", fontWeight:800,
+        padding:"3px 11px", borderRadius:"999px", zIndex:3, pointerEvents:"none", whiteSpace:"nowrap" };
+      const doneBadge = { position:"absolute", top:"32%", right:"12%", width:"22px", height:"22px",
+        borderRadius:"50%", background:"#0a855c", color:"#fff", fontSize:"13px", fontWeight:800,
+        display:"flex", alignItems:"center", justifyContent:"center", lineHeight:1, zIndex:4,
+        boxShadow:"0 2px 6px rgba(0,0,0,.3)" };
+      const lockStyle = { position:"absolute", left:"50%", top:"60%", transform:"translate(-50%,-50%)",
+        color:"#5f574f", zIndex:4, lineHeight:0, pointerEvents:"none" };
+      const ribbonStyle = { position:"absolute", top:"4%", left:"50%", marginLeft:"-9px", fontSize: big?"18px":"15px",
+        color:"#ffd24a", zIndex:4, filter:"drop-shadow(0 1px 2px rgba(0,0,0,.4))", pointerEvents:"none" };
+      return { day, done, locked, big, special:big, showNum:!done, imgStyle, cell, numStyle, dayPill, doneBadge, lockStyle, ribbonStyle,
+        onClick: ()=>this.openDoor(day) };
+    });
+
+    // Hintergrund-Deko (Übersicht) — überschneidungsfrei platziert (gecached)
+    if(!this._scene) this._scene = this.buildScene();
+    const sceneFish = this._scene.fish, sceneHorses = this._scene.horses,
+          sceneShells = this._scene.shells, sceneStars = this._scene.stars;
+    const gridStyle = { display:"flex", flexWrap:"wrap", gap:"18px 16px", justifyContent:"center",
+      alignItems:"flex-start", maxWidth:"384px", margin:"0 auto", paddingTop:"6px" };
+
+    const openedCount = Object.keys(S.participated).filter(d=>+d<=8).length;
+    const pct = Math.round(openedCount/8*100);
+    const progressStyle = { height:"100%", width:pct+"%", borderRadius:"999px", background: TH.progress, transition:"width .4s ease" };
+    const progressLabelStyle = { fontSize:"11px", fontWeight:800, color:"#0c5b69", whiteSpace:"nowrap" };
+    const calTitleStyle = { fontFamily:"'Great Vibes', cursive", fontSize:"44px", fontWeight:400, color:"#fff",
+      margin:"0", lineHeight:".9", textShadow:"0 2px 12px rgba(0,0,0,.3)" };
+    const taglineStyle = { fontFamily:"Montserrat,sans-serif", fontSize:"10px", fontWeight:700, letterSpacing:".16em",
+      textTransform:"uppercase", color:"#f6d97a", marginTop:"3px" };
+    const frameStyle = { margin:"2px 0 6px", padding:"13px 11px 15px", borderRadius:"16px",
+      border:"2px solid rgba(255,255,255,.85)", boxShadow:"inset 0 0 0 4px rgba(255,255,255,.14), inset 0 0 0 5px rgba(255,210,74,.55)" };
+
+    // door detail
+    let door = null, notConfirmed = false;
+    if(S.screen==="door" && S.activeDay){
+      const d = this.doors[S.activeDay-1];
+      const heroBgStyle = { position:"relative", height:"278px", flexShrink:0, overflow:"hidden",
+        background:"linear-gradient(180deg,#8fd8ec 0%,#46bcd0 40%,#1f9cb4 60%,#7fcdb9 71%,#ecd9ad 84%,#f4e8ce 100%)" };
+      const prodSlotId = "ehorses-holiday-prod-"+S.activeDay;
+      const logoSlotId = "ehorses-holiday-logo-"+S.activeDay;
+      const miniHeroStyle = { width:"58px", height:"58px", borderRadius:"12px", flexShrink:0,
+        background:"radial-gradient(circle at 50% 42%,#fff6df,#f4cf6a 70%,#e0a93b)",
+        display:"flex", alignItems:"center", justifyContent:"center", color:"#c01a21" };
+      const answerVMs = d.answers.map((a,i)=>{
+        const sel = S.selAnswer===i;
+        return { label:a, letter:String.fromCharCode(65+i), onClick:()=>this.chooseAnswer(i),
+          style:{ display:"flex", alignItems:"center", gap:"12px", width:"100%",
+            padding:"13px 15px", borderRadius:"12px", cursor: S.confirmed?"default":"pointer",
+            border:"2px solid "+(sel?"#c42026":"#e6e6e6"), background: sel?"#fdecea":"#fff",
+            color:"#242424", fontSize:"15px", fontWeight:600, fontFamily:"Montserrat,sans-serif",
+            transition:"all .15s", boxShadow: sel?"0 4px 14px rgba(196,32,38,.16)":"none" },
+          letterStyle:{ flexShrink:0, width:"27px", height:"27px", borderRadius:"50%",
+            display:"flex", alignItems:"center", justifyContent:"center", fontSize:"13px", fontWeight:800,
+            background: sel?"#c42026":"#f3f3f3", color: sel?"#fff":"#666", transition:"all .15s" } };
+      });
+      const sizeVMs = d.size ? d.size.options.map(o=>{
+        const sel = S.selSize===o;
+        return { label:o, onClick:()=>this.chooseSize(o),
+          style:{ padding:"9px 16px", borderRadius:"999px", cursor:S.confirmed?"default":"pointer",
+            border:"2px solid "+(sel?"#c42026":"#e0e0e0"), background:sel?"#c42026":"#fff",
+            color:sel?"#fff":"#4d4d4d", fontSize:"14px", fontWeight:700, fontFamily:"Montserrat,sans-serif",
+            transition:"all .15s" } };
+      }) : [];
+      door = { ...d, dayLabel:S.activeDay, heroBgStyle, prodSlotId, logoSlotId, miniHeroStyle, hasSize:!!d.size,
+        sizeLabel: d.size? d.size.label.replace("Welche ","").replace("Welcher ","").replace("Welche","").replace("?",""):"",
+        answerVMs, sizeVMs,
+        chosenAnswer: S.selAnswer!=null ? (String.fromCharCode(65+S.selAnswer)+" · "+d.answers[S.selAnswer]) : "",
+        chosenSize: S.selSize!=null ? S.selSize : "" };
+      notConfirmed = !S.confirmed;
+    }
+
+    const canParticipate = S.selAnswer!=null && (!door || !door.hasSize || S.selSize!=null);
+    const participateStyle = { width:"100%", marginTop:"20px", padding:"15px", border:"none", borderRadius:"12px",
+      fontSize:"16px", fontWeight:700, fontFamily:"Montserrat,sans-serif", cursor: canParticipate?"pointer":"not-allowed",
+      background: canParticipate? "#c42026":"#e0d5d5", color: canParticipate? "#fff":"#fff", transition:"all .2s" };
+
+    return {
+      snowRef:this.snowRef, appBgStyle,
+      isLogin:onLogin, isLinkSent:onSent, isCalendar:S.screen==="calendar", isDoor:S.screen==="door",
+      emailInput:S.emailInput, onEmail:this.onEmail, sendLink:this.sendLink,
+      email:S.email, openMagic:this.openMagic, changeEmail:this.changeEmail, logout:this.logout,
+      toggleNewsletter:this.toggleNewsletter, toggleConsent:this.toggleConsent,
+      nlBox: chkBox(S.newsletter), nlMark: S.newsletter?"✓":"",
+      csBox: chkBox(S.consent), csMark: S.consent?"✓":"",
+      codeInput:S.codeInput, onCode:this.onCode, verifyCode:this.verifyCode,
+      tiles, gridStyle, calTitleStyle, taglineStyle, frameStyle, sceneFish, sceneHorses, sceneShells, sceneStars,
+      openedLabel: openedCount+" / 8 geöffnet", progressStyle, progressLabelStyle,
+      currentDayLabel: this.monthName(S.currentDay), stepBack:()=>this.stepDay(-1), stepFwd:()=>this.stepDay(1),
+      door, notConfirmed, confirmed:S.confirmed, participate:this.participate, participateStyle,
+      backToCalendar:this.backToCalendar,
+      toastVisible: !!S.toast, toastText:S.toast
+    };
+  }
+}
+</script>
+</body>
+</html>
